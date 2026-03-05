@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Наша свадьба 💍</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: #fff0f5;
+            color: #333;
+        }
+        h1 {
+            font-size: 50px;
+            color: #b76e79;
+            margin-top: 50px;
+        }
+        .date {
+            font-size: 25px;
+            margin-bottom: 30px;
+        }
+        .gallery img {
+            width: 200px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .rsvp {
+            margin-top: 30px;
+        }
+        input, select {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #b76e79;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #a15b65;
+        }
+        .message {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+        #timer {
+            font-size: 30px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Мы женимся 💍</h1>
+<div class="date">15 августа 2026</div>
+
+<!-- Таймер -->
+<div id="timer"></div>
+
+<!-- Галерея -->
+<div class="gallery">
+    <img src="https://via.placeholder.com/200x200?text=Фото+1">
+    <img src="https://via.placeholder.com/200x200?text=Фото+2">
+    <img src="https://via.placeholder.com/200x200?text=Фото+3">
+</div>
+
+<!-- Форма RSVP -->
+<div class="rsvp">
+    <h2>Подтвердите присутствие</h2>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Ваше имя" required><br>
+        <select name="attending" required>
+            <option value="">Вы придёте?</option>
+            <option value="Да">Да</option>
+            <option value="Нет">Нет</option>
+        </select><br>
+        <button type="submit">Отправить</button>
+    </form>
+    {% if message %}
+    <div class="message">{{ message }}</div>
+    {% endif %}
+</div>
+
+<script>
+// Таймер до свадьбы
+const weddingDate = new Date("August 15, 2026 15:00:00").getTime();
+const timer = document.getElementById("timer");
+
+function updateTimer() {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
+    if (diff < 0) {
+        timer.innerHTML = "Сегодня наш день!";
+        clearInterval(interval);
+        return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    timer.innerHTML = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+}
+const interval = setInterval(updateTimer, 1000);
+updateTimer();
+</script>
+
+</body>
+</html>
